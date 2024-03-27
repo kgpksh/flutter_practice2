@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_practice2/model/user_info_results.dart';
 
 class UserInfoWidget extends StatelessWidget {
-  const UserInfoWidget({super.key});
+  final UserInfo userInfo;
+
+  const UserInfoWidget({required this.userInfo, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,34 +13,31 @@ class UserInfoWidget extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundImage: Image.network(
-                'https://randomuser.me/api/portraits/men/75.jpg')
-                .image,
+            backgroundImage: Image.network(userInfo.profileImage).image,
           ),
-          const SizedBox(width: 20,),
-          const Expanded(
+          const SizedBox(
+            width: 20,
+          ),
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'test@gmail.com',
-                  style: TextStyle(
+                  userInfo.email,
+                  style: const TextStyle(
                     fontWeight: FontWeight.w200,
                     fontSize: 11,
                   ),
                 ),
                 Text(
-                  'Name',
-                  style: TextStyle(
+                  userInfo.name,
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Colors.blue),
                 ),
                 Row(
-                  children: [
-                    Icon(Icons.phone),
-                    Text('01012345678')
-                  ],
+                  children: [const Icon(Icons.phone), Text(userInfo.phone)],
                 )
               ],
             ),
