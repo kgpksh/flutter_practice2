@@ -4,7 +4,7 @@ class UserInfoResult extends Equatable {
   final int currentPage;
   final List<UserInfo> userInfoList;
 
-  UserInfoResult({required this.currentPage, required this.userInfoList});
+  const UserInfoResult({required this.currentPage, required this.userInfoList});
 
   UserInfoResult.init() : this(currentPage: 0, userInfoList: []);
 
