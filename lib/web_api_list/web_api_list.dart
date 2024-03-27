@@ -37,8 +37,6 @@ class _WebApiListState extends State<WebApiList> {
       'seed': 'sudar',
       'page': userInfoResult.currentPage,
     });
-    
-    await Future.delayed(Duration(microseconds: 500));
 
     userInfoResult = userInfoResult.copyWithJson(result.data);
     return userInfoResult;
@@ -91,63 +89,3 @@ class _WebApiListState extends State<WebApiList> {
     );
   }
 }
-
-// class WebApiList extends StatelessWidget {
-//   WebApiList({super.key});
-//   late Dio _dio;
-//
-//   Future<UserInfoResult> _loadUserList() async {
-//     var result = await _dio.get('api', queryParameters: {
-//       'results': 10,
-//       'seed': 'sudar',
-//       'page': 0,
-//     });
-//
-//     return UserInfoResult.fromJson(result.data);
-//   }
-//
-//   Widget _error() {
-//     return const Center(
-//       child: Text('오류 발생'),
-//     );
-//   }
-//
-//   Widget _loading() {
-//     return Center(child: CircularProgressIndicator());
-//   }
-//
-//   Widget _userListWidget(List<UserInfo> userInfoList) {
-//     return ListView.separated(
-//       itemBuilder: (context, index) {
-//         return UserInfoWidget(
-//           userInfo: userInfoList[index],
-//         );
-//       },
-//       separatorBuilder: (context, index) =>
-//       const Divider(color: Colors.grey),
-//       itemCount: userInfoList.length,
-//     );
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     _dio = Dio(BaseOptions(baseUrl: 'https://randomuser.me/'));
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Web Api List'),
-//       ),
-//       body: FutureBuilder<UserInfoResult>(
-//         future: _loadUserList(),
-//         builder: (context, snapshot) {
-//           if (snapshot.hasError) {
-//             return _error();
-//           }
-//           if (snapshot.hasData) {
-//             return _userListWidget(snapshot.data!.userInfoList);
-//           }
-//           return _loading();
-//         },
-//       ),
-//     );
-//   }
-// }

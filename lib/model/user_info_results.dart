@@ -6,6 +6,8 @@ class UserInfoResult extends Equatable {
 
   UserInfoResult({required this.currentPage, required this.userInfoList});
 
+  UserInfoResult.init() : this(currentPage: 0, userInfoList: []);
+
   factory UserInfoResult.fromJson(Map<String, dynamic> json) {
     return UserInfoResult(
       currentPage: (json['info']['page'] as int) + 1,

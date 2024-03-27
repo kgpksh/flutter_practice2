@@ -26,6 +26,20 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             )),
+            SizedBox(height: 50,),
+            ClipRect(
+                child: Stack(
+                  children: [
+                    Positioned.fill(child: Container(
+                      color: Colors.greenAccent,
+                    )),
+                    TextButton(
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed('/cubitWebApiList'),
+                      child: Text('CubitWebApiList'),
+                    ),
+                  ],
+                )),
           ],
         ),
       ),
