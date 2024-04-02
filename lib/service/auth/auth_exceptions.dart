@@ -13,3 +13,7 @@ class InvalidPasswordAuthException implements Exception {}
 class InvalidCredentialAuthException implements Exception {}
 
 class UserNotFoundAuthException implements Exception {}
+
+class GoogleAuthException implements Exception {}
+
+class GoogleFinalCredentialException implements Exception {}

@@ -1,29 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart'
     show FirebaseAuth, FirebaseAuthException;
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_practice2/firebase_options.dart';
 import 'package:flutter_practice2/service/auth/auth_exceptions.dart';
 import 'package:flutter_practice2/service/auth/auth_provider.dart';
 import 'package:flutter_practice2/service/auth/auth_user.dart';
+import 'package:flutter_practice2/service/auth/firebase_email_login/firebase_email_login.dart';
+import 'package:flutter_practice2/service/auth/login_provider.dart';
+import 'package:flutter_practice2/service/auth/oauth_login/google_login.dart';
 
-class FirebaseEmailProvider implements AuthProvider {
+class FirebaseLoginProvider implements AuthProvider {
+  final LoginProvider loginProvider;
+
+  FirebaseLoginProvider({required this.loginProvider});
+
+  factory FirebaseLoginProvider.firebaseEmail() => FirebaseLoginProvider(loginProvider: FirebaseEmailLogin());
+  factory FirebaseLoginProvider.googleLogin() => FirebaseLoginProvider(loginProvider: GoogleOAuth());
+
   @override
-  Future<void> initialize() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  }
-
-  @override
-  AuthUser? get currentUser {
-    final user = FirebaseAuth.instance.currentUser;
-
-    if (user != null) {
-      return AuthUser.fromFirebaseEmail(user);
-    } else {
-      return null;
-    }
-  }
+  AuthUser? get currentUser => loginProvider.currentUser;
 
   @override
   Future<AuthUser> createUser({
@@ -56,33 +49,8 @@ class FirebaseEmailProvider implements AuthProvider {
   }
 
   @override
-  Future<AuthUser> logIn({
-    required String email,
-    required String? password,
-  }) async {
-    try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password!);
-      final user = currentUser;
-      if (user != null) {
-        return user;
-      } else {
-        throw UserNotLoggedInAuthException();
-      }
-    } on FirebaseAuthException catch (e) {
-      switch (e.code) {
-        case 'invalid-email':
-          throw InvalidEmailAuthException();
-        case 'invalid-password':
-          throw InvalidPasswordAuthException();
-        case 'invalid-credential':
-          throw InvalidEmailAuthException();
-        default:
-          throw GenericAuthException();
-      }
-    } catch (_) {
-      throw GenericAuthException();
-    }
+  Future<AuthUser> logIn({required String? email, required String? password}) {
+    return loginProvider.logIn(email: email, password: password);
   }
 
   @override

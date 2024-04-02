@@ -19,6 +19,8 @@ class FirebaseEmailLoginEvent extends AuthEvent {
   FirebaseEmailLoginEvent({required this.email, required this.password});
 }
 
+class GoogleLoginEvent extends AuthEvent {}
+
 class FirebaseEmailLogoutEvent extends AuthEvent {}
 
 class FirebaseEmailVerifyEvent extends AuthEvent {}

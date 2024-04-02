@@ -86,6 +86,41 @@ class _LoginViewState extends State<LoginView> {
                   ],
                 ),
                 GestureDetector(
+                  onTap: () {
+                    context.read<AuthBloc>().add(GoogleLoginEvent());
+                  },
+                  child: Container(
+                    margin: EdgeInsetsDirectional.symmetric(vertical: 20),
+                    width: 300,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.0),
+                      border: Border.all(color: Colors.black, width: 1.0),
+                    ),
+                    // color: Colors.yellow,
+                    child: const Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.g_mobiledata_outlined,
+                            color: Colors.green,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Google Login',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                GestureDetector(
                   onTap: () =>
                       Navigator.of(context).pushNamed('/cubitWebApiList'),
                   child: Container(

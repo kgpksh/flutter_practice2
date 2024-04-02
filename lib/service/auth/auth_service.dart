@@ -1,18 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_practice2/firebase_options.dart';
 import 'package:flutter_practice2/service/auth/auth_provider.dart';
 import 'package:flutter_practice2/service/auth/auth_user.dart';
-import 'package:flutter_practice2/service/auth/firebase_email_provider.dart';
+import 'package:flutter_practice2/service/auth/firebase_login.dart';
 
 class AuthService implements AuthProvider {
-  @override
-  Future<void> initialize() => provider.initialize();
   final AuthProvider provider;
+  const AuthService({required this.provider});
 
-  const AuthService(this.provider);
+  factory AuthService.firebaseEmail() => AuthService(provider : FirebaseLoginProvider.firebaseEmail());
+  factory AuthService.googleLogin() => AuthService(provider: FirebaseLoginProvider.googleLogin());
 
-  factory AuthService.firebaseEmail() => AuthService(FirebaseEmailProvider());
-
-  @override
-  AuthUser? get currentUser => provider.currentUser;
+  static Future<void> initialize() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
 
   @override
   Future<AuthUser> createUser({
@@ -21,10 +24,6 @@ class AuthService implements AuthProvider {
   }) {
     return provider.createUser(email: email, password: password);
   }
-
-  @override
-  Future<AuthUser> logIn({required String email, required String? password}) =>
-      provider.logIn(email: email, password: password);
 
   @override
   Future<void> logOut() => provider.logOut();
