@@ -21,6 +21,8 @@ class FirebaseEmailLoginEvent extends AuthEvent {
 
 class GoogleLoginEvent extends AuthEvent {}
 
+class KakaoLoginEvent extends AuthEvent {}
+
 class FirebaseEmailLogoutEvent extends AuthEvent {}
 
 class FirebaseEmailVerifyEvent extends AuthEvent {}

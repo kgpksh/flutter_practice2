@@ -121,15 +121,15 @@ class _LoginViewState extends State<LoginView> {
                 ),
 
                 GestureDetector(
-                  onTap: () =>
-                      Navigator.of(context).pushNamed('/cubitWebApiList'),
+                  onTap: () {
+                    context.read<AuthBloc>().add(KakaoLoginEvent());
+                  },
                   child: Container(
                     width: 300,
                     height: 60,
                     decoration: BoxDecoration(
                       color: Colors.yellow,
                       borderRadius: BorderRadius.circular(8.0),
-                      // border: Border.all(color: Colors.black, width: 1.0),
                     ),
                     // color: Colors.yellow,
                     child: const Center(

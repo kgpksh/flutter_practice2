@@ -17,3 +17,9 @@ class UserNotFoundAuthException implements Exception {}
 class GoogleAuthException implements Exception {}
 
 class GoogleFinalCredentialException implements Exception {}
+
+class KakaoFinalCredentialException implements Exception {}
+
+class KakaoLoginCanceledException implements Exception {}
+
+class KakaoLoginFailedException implements Exception {}

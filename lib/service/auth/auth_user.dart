@@ -16,5 +16,5 @@ class AuthUser {
   factory AuthUser.fromFirebaseEmail(User user) =>
       AuthUser(id: user.uid, email: user.email ?? '', isEmailVerified: user.emailVerified);
 
-  factory AuthUser.fromSocialLogin(User user) => AuthUser(id: user.uid, email: user.email ?? '', isEmailVerified: user.emailVerified);
+  factory AuthUser.fromSocialLogin(User user) => AuthUser(id: user.uid, email: user.email ?? '', isEmailVerified: true);
 }
