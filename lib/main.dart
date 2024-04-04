@@ -7,7 +7,7 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  KakaoSdk.init(nativeAppKey: '${YOUR_NATIVE_APP_KEY}');
+  // KakaoSdk.init(nativeAppKey: '${YOUR_NATIVE_APP_KEY}');
   runApp(MyApp());
 }
 
