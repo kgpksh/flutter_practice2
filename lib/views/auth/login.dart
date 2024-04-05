@@ -90,7 +90,7 @@ class _LoginViewState extends State<LoginView> {
                     context.read<AuthBloc>().add(GoogleLoginEvent());
                   },
                   child: Container(
-                    margin: EdgeInsetsDirectional.symmetric(vertical: 20),
+                    margin: EdgeInsetsDirectional.symmetric(vertical: 10),
                     width: 300,
                     height: 60,
                     decoration: BoxDecoration(
@@ -125,6 +125,7 @@ class _LoginViewState extends State<LoginView> {
                     context.read<AuthBloc>().add(KakaoLoginEvent());
                   },
                   child: Container(
+                    margin: EdgeInsetsDirectional.symmetric(vertical: 10),
                     width: 300,
                     height: 60,
                     decoration: BoxDecoration(
@@ -145,6 +146,38 @@ class _LoginViewState extends State<LoginView> {
                           ),
                           Text(
                             'Kakao Login',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    context.read<AuthBloc>().add(AppleLoginEvent());
+                  },
+                  child: Container(
+                    margin: EdgeInsetsDirectional.symmetric(vertical: 10),
+                    width: 300,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: const Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.apple,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Apple Login',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],

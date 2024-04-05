@@ -23,3 +23,7 @@ class KakaoFinalCredentialException implements Exception {}
 class KakaoLoginCanceledException implements Exception {}
 
 class KakaoLoginFailedException implements Exception {}
+
+class AppleLoginFailed implements Exception {}
+
+class AppleFinalCredentialException implements Exception {}

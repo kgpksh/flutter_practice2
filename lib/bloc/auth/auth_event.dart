@@ -23,6 +23,8 @@ class GoogleLoginEvent extends AuthEvent {}
 
 class KakaoLoginEvent extends AuthEvent {}
 
+class AppleLoginEvent extends AuthEvent {}
+
 class FirebaseEmailLogoutEvent extends AuthEvent {}
 
 class FirebaseEmailVerifyEvent extends AuthEvent {}
