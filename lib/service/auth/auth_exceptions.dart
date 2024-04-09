@@ -27,3 +27,6 @@ class KakaoLoginFailedException implements Exception {}
 class AppleLoginFailed implements Exception {}
 
 class AppleFinalCredentialException implements Exception {}
+
+class NaverInitialException implements Exception {}
+class NaverDeepLinkException implements Exception {}

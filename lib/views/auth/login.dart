@@ -185,6 +185,34 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                 ),
+                GestureDetector(
+                  onTap: () {
+                    context.read<AuthBloc>().add(NaverLoginEvent());
+                  },
+                  child: Container(
+                    margin: EdgeInsetsDirectional.symmetric(vertical: 10),
+                    width: 300,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: const Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Naver Login',
+                            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

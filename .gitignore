@@ -47,3 +47,4 @@ app.*.map.json
 /android/app/google-services.json
 /ios/Runner/Info.plist
 /lib/secret_keys.dart
+/android/app/src/main/res/values/secretKeys.xml

@@ -24,18 +24,27 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!-- Deep Links -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST -->
+                <data
+                    android:scheme="flutterpractice2naverauthcallbackscheme" />
+            </intent-filter>
         </activity>
 
-<!--        <activity android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity">-->
-<!--            <intent-filter android:label="flutter_web_auth">-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+        <activity android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity">
+            <intent-filter android:label="flutter_web_auth">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-<!--                &lt;!&ndash; Redirect URI, "kakao${YOUR_NATIVE_APP_KEY}://oauth" 형식 &ndash;&gt;-->
-<!--                <data android:scheme="kakao${YOUR_NATIVE_APP_KEY}" android:host="oauth"/>-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+                <!-- Redirect URI, "kakao${YOUR_NATIVE_APP_KEY}://oauth" 형식 -->
+                <data android:scheme="@secretKeys/kakao_native_app_key" android:host="oauth"/>
+            </intent-filter>
+        </activity>
 
         <!-- Set up the Sign in with Apple activity, such that it's callable from the browser-redirect -->
         <activity
