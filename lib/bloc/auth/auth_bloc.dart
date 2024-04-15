@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_practice2/service/auth/auth_service.dart';
@@ -14,6 +16,7 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  StreamSubscription<User?>? authListener;
   final AuthService _firebaseLoginService = AuthService.firebaseEmail();
   final LoginProvider _firebaseEmailLogin = FirebaseEmailLogin();
   final LoginProvider _googleLogin = GoogleOAuth();
@@ -21,18 +24,34 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginProvider _appleLogin = AppleOAuth();
   final LoginProvider _naverLogin = NaverOAuth();
 
+
+  @override
+  Future<void> close() {
+    authListener?.cancel();
+    return super.close();
+  }
+
   AuthBloc() : super(AuthInitial()) {
     on<AuthInitialEvent>((event, emit) async {
       await AuthService.initialize();
+      authListener = FirebaseAuth.instance.authStateChanges().listen((User? user) {
+        add(AuthChangedEvent(user: user));
+      });
+    });
 
-      final user = FirebaseAuth.instance.currentUser;
-      if (user == null) {
-        emit(AuthLoggedOut(
-          exception: null,
-        ));
-      } else {
-        emit(AuthLoggedIn(isVerified: user.emailVerified));
+    on<AuthChangedEvent>((event, emit) {
+      try{
+        if (event.user == null) {
+          emit(AuthLoggedOut(exception: null));
+        } else {
+          final bool isEmailLogin = event.user!.providerData.first.providerId == 'password';
+          final bool isVerified = event.user!.emailVerified;
+          emit(AuthLoggedIn(isVerified: !isEmailLogin || isVerified));
+        }
+      } on Exception catch (e) {
+        emit(AuthLoggedOut(exception: e));
       }
+
     });
 
     on<FirebaseEmailRegisterEvent>((event, emit) async {
@@ -47,90 +66,30 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     on<FirebaseEmailLoginEvent>((event, emit) async {
-      emit(AuthLoggedOut(
-        exception: null,
-      ));
-      try {
-        final user = await _firebaseEmailLogin.logIn(
-          email: event.email,
-          password: event.password,
-        );
-
-        emit(AuthLoggedIn(isVerified: user.isEmailVerified));
-      } on Exception catch (e) {
-        emit(AuthLoggedOut(
-          exception: e,
-        ));
-      }
+      await _firebaseEmailLogin.logIn(
+        email: event.email,
+        password: event.password,
+      );
     });
 
     on<GoogleLoginEvent>((event, emit) async {
-      emit(AuthLoggedOut(
-        exception: null,
-      ));
-
-      try {
-        final user = await _googleLogin.logIn(email: null, password: null);
-        emit(AuthLoggedIn(isVerified: user.isEmailVerified));
-      } on Exception catch (e) {
-        emit(AuthLoggedOut(
-          exception: e,
-        ));
-      }
+      await _googleLogin.logIn(email: null, password: null);
     });
 
     on<AppleLoginEvent>((event, emit) async {
-      emit(AuthLoggedOut(
-        exception: null,
-      ));
-
-      try {
-        final user = await _appleLogin.logIn(email: null, password: null);
-        emit(AuthLoggedIn(isVerified: user.isEmailVerified));
-      } on Exception catch (e) {
-        emit(AuthLoggedOut(
-          exception: e,
-        ));
-      }
+      await _appleLogin.logIn(email: null, password: null);
     });
 
     on<KakaoLoginEvent>((event, emit) async {
-      emit(AuthLoggedOut(
-        exception: null,
-      ));
-
-      try {
-        final user = await _kakaoLogin.logIn(email: null, password: null);
-        emit(AuthLoggedIn(isVerified: user.isEmailVerified));
-      } on Exception catch (e) {
-        emit(AuthLoggedOut(
-          exception: e,
-        ));
-      }
+      await _kakaoLogin.logIn(email: null, password: null);
     });
 
     on<NaverLoginEvent>((event, emit) async {
-      emit(AuthLoggedOut(
-        exception: null,
-      ));
-
-      try {
-        final user = await _naverLogin.logIn(email: null, password: null);
-        emit(AuthLoggedIn(isVerified: user.isEmailVerified));
-      } on Exception catch (e) {
-        emit(AuthLoggedOut(
-          exception: e,
-        ));
-      }
+      await _naverLogin.logIn(email: null, password: null);
     });
 
     on<FirebaseEmailLogoutEvent>((event, emit) async {
-      try {
-        await _firebaseLoginService.logOut();
-        emit(AuthLoggedOut(exception: null));
-      } on Exception catch (e) {
-        emit(AuthLoggedOut(exception: e));
-      }
+      await _firebaseLoginService.logOut();
     });
 
     on<FirebaseEmailVerifyEvent>((event, emit) async {

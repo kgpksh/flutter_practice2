@@ -5,6 +5,11 @@ sealed class AuthEvent {}
 
 class AuthInitialEvent extends AuthEvent {}
 
+class AuthChangedEvent extends AuthEvent {
+  User? user;
+  AuthChangedEvent({required this.user});
+}
+
 class FirebaseEmailRegisterEvent extends AuthEvent {
   final String email;
   final String password;
