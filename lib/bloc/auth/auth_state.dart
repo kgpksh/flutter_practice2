@@ -23,8 +23,9 @@ class AuthLoggedOut extends AuthState {
 
 class AuthLoggedIn extends AuthState {
   final bool isVerified;
+  final String userId;
 
-  AuthLoggedIn({required this.isVerified});
+  AuthLoggedIn({required this.isVerified, required this.userId});
 }
 
 class ResetPasswordState extends AuthState {

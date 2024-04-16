@@ -46,7 +46,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         } else {
           final bool isEmailLogin = event.user!.providerData.first.providerId == 'password';
           final bool isVerified = event.user!.emailVerified;
-          emit(AuthLoggedIn(isVerified: !isEmailLogin || isVerified));
+          emit(AuthLoggedIn(isVerified: !isEmailLogin || isVerified, userId: event.user!.uid));
         }
       } on Exception catch (e) {
         emit(AuthLoggedOut(exception: e));
@@ -93,11 +93,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     on<FirebaseEmailVerifyEvent>((event, emit) async {
-      final isVerified = _firebaseEmailLogin.currentUser!.isEmailVerified;
+      final user = _firebaseEmailLogin.currentUser;
+      final isVerified = user!.isEmailVerified;
       if (!isVerified) {
         await _firebaseLoginService.sendEmailVerification();
       }
-      emit(AuthLoggedIn(isVerified: isVerified));
+      emit(AuthLoggedIn(isVerified: isVerified, userId: user.id!));
     });
 
     on<FirebaseForgotPasswordEvent>((event, emit) async {

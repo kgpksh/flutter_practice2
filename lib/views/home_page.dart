@@ -16,6 +16,14 @@ class HomePage extends StatelessWidget {
             title: Text('HomePage'),
             actions: [
               Visibility(
+                  visible: state is AuthLoggedIn && state.isVerified,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/storeManage');
+                    },
+                    child: Text('Manage my store'),
+                  )),
+              Visibility(
                   visible: state is AuthLoggedIn && !state.isVerified,
                   child: TextButton(
                     onPressed: () {
@@ -96,6 +104,23 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 )),
+                const SizedBox(
+                  height: 50,
+                ),
+                ClipRect(
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                            child: Container(
+                              color: Colors.greenAccent,
+                            )),
+                        TextButton(
+                          onPressed: () =>
+                              Navigator.of(context).pushNamed('/showStores'),
+                          child: Text('Show Stores State'),
+                        ),
+                      ],
+                    )),
               ],
             ),
           ),

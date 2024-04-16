@@ -8,6 +8,8 @@ import 'package:flutter_practice2/views/auth/register.dart';
 import 'package:flutter_practice2/views/cubit/user_list.dart';
 import 'package:flutter_practice2/views/cubit/user_list_copywith.dart';
 import 'package:flutter_practice2/views/home_page.dart';
+import 'package:flutter_practice2/views/store/manage_store.dart';
+import 'package:flutter_practice2/views/store/show_stores.dart';
 import 'package:flutter_practice2/views/web_api_list/web_api_list.dart';
 
 class AppRouter {
@@ -36,6 +38,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => RegisterView());
       case '/loginView/forgotPasswordView' :
         return MaterialPageRoute(builder: (_) => ForgotPasswordView());
+      case '/storeManage' :
+        return MaterialPageRoute(builder: (_) => ManageStore());
+      case '/showStores' :
+        return MaterialPageRoute(builder: (_) => ShowStores());
       default:
         return null;
     }
